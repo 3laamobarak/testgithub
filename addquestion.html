@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Question Bank-List Page</title>
+	<link rel="icon" href="C:\Users\DELL\Pictures\Screenshots\Screenshot 2023-06-18 225539.png" type="image/png">
+	<style>
+		body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f0f0;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  border-radius: 8px;
+}
+
+h1 {
+  text-align: center;
+  color: #222;
+}
+
+select,
+input[type="text"],
+textarea {
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 87%;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+select:hover,
+input[type="text"]:hover,
+textarea:hover,
+select:focus,
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+}
+
+input[type="submit"] {
+	margin-left: -57px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+  background-color: #0069d9;
+}
+
+.question-container {
+  margin-top: 40px;
+  padding: 20px;
+  border: none;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.question-container:hover {
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.3);
+}
+
+.question-container h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: #222;
+}
+
+.question-container p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #555;
+}
+
+.question-container ul {
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.question-container li {
+  list-style: none;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #555;
+}
+
+.question-container button {
+  margin-top: 20px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.question-container button:first-child {
+  margin-right: 10px;
+}
+
+.question-container button:hover {
+  background-color: #0069d9;
+}
+
+.question-container .answer {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #222;
+}
+
+.question-container .answer p {
+  margin-bottom: 0;
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+		.card {
+			border: 1px solid #ccc;
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 5px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		.question-type__label {
+			display: inline-block;
+			margin-right: 10px;
+		}
+
+		.question-form__label {
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		.question-form__input,
+		.mcq-options__input,
+		.article-options__textarea {
+			display: block;
+			margin-bottom: 10px;
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		.question-form__submit {
+			display: block;
+			margin-top: 10px;
+			padding: 5px 10px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.question-form__submit:hover {
+			background-color: #0069d9;
+		}
+
+		.result {
+			border: 1px solid #ccc;
+			background-color: #f2f2f2;
+			padding: 10px;
+			margin-top: 20px;
+		}
+
+		.result__edit,
+		.result__delete {
+			padding: 5px 10px;
+			border: none;
+			border-radius: 5px;
+			margin-right: 10px;
+			cursor: pointer;
+		}
+
+		.result__edit {
+			background-color: #007bff;
+			color: #fff;
+		}
+
+		.result__edit:hover {
+			background-color: #0069d9;
+		}
+
+		.result__delete {
+			background-color: #dc3545;
+			color: #fff;
+		}
+
+		.result__delete:hover {
+			background-color: #c82333;
+		}
+				.main__wrapper {
+			margin: 0 auto;
+			max-width: 600px;
+			padding: 20px;
+		}
+
+		.question-type__label,
+		.question-form__label,
+		.mcq-options__label,
+		.true-false-options__label,
+		.article-options__label {
+			display: inline-block;
+			margin-bottom: 10px;
+		}
+
+		.question-type__select,
+		.true-false-options__select {
+			margin-left: 10px;
+			margin-bottom: 10px;
+			padding: 5px;
+		}
+
+		.question-form__input,
+		.mcq-options__input,
+		.true-false-options__select,
+		.article-options__textarea {
+			display: block;
+			margin-bottom: 10px;
+			padding: 5px;
+			width: 100%;
+		}
+
+		.mcq-options {
+			display: none;
+		}
+
+		.true-false-options {
+			display: none;
+		}
+
+		.article-options {
+			display: none;
+		}
+
+		.question-form__submit {
+			display: block;
+			margin-top: 20px;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.result {
+			margin-top: 20px;
+			padding: 10px;
+			background-color: #f0f0f0;
+			border-radius: 5px;
+		}
+
+		.result p {
+			margin-bottom: 10px;
+		}
+
+		.result button {
+			margin-top: 10px;
+			padding: 5px 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.navigation button#openModal {
+			text-decoration: none;
+			color: #333;
+			font-size: 16px;
+			margin-right: 30px;
+			padding: 10px 0;
+			position: relative;
+			background-color: white;
+			border: white;
+			font-family: JetBrains Mono, monospace
+		}
+
+		.navigation button#openModal::after {
+			content: "";
+			position: absolute;
+			width: 0%;
+			height: 2px;
+			background-color: #4ec9b0;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			transition: all 0.3s;
+		}
+
+		.navigation button#openModal:hover {
+			color: #4ec9b0;
+		}
+
+		.navigation button#openModal:hover::after {
+			width: 100%;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #f5f5f5;
+			font-family: JetBrains Mono, monospace;
+			font-size: 16px;
+			color: #333;
+		}
+
+		header {
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 20px 40px;
+			background-color: #fff;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 999;
+		}
+
+		.logo {
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+			color: #333;
+			font-size: 24px;
+			font-weight: bold;
+			letter-spacing: 1px;
+			margin-right: 40px;
+		}
+
+		.logo img {
+			width: 40px;
+			height: 40px;
+			margin-right: 10px;
+		}
+
+		.navigation {
+			display: flex;
+			align-items: center;
+		}
+
+		.navigation a {
+			text-decoration: none;
+			color: #333;
+			font-size: 16px;
+			margin-right: 30px;
+			padding: 10px 0;
+			transition: all 0.3s;
+			position: relative;
+		}
+
+		.navigation a:hover {
+			color: #4ec9b0;
+		}
+
+		.navigation a:before {
+			content: "";
+			position: absolute;
+			width: 0%;
+			height: 2px;
+			background-color: #4ec9b0;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			transition: all 0.3s;
+		}
+
+		.navigation a:hover:before {
+			width: 100%;
+		}
+
+		.profile {
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+			color: #333;
+			font-size: 16px;
+			font-weight: bold;
+			padding: 10px 20px;
+			background-color: #ffffff;
+			border-radius: 20px;
+			transition: all 0.3s;
+		}
+
+		.profile:hover {
+			background-color: #3a8c7f;
+		}
+
+		.profile img {
+			width: 30px;
+			height: 30px;
+			margin-right: 10px;
+			border-radius: 50%;
+			object-fit: cover;
+			object-position: center;
+		}
+
+		.profile span {
+			margin-right: 10px;
+		}
+
+		.sub-menu-wrap {
+			position: absolute;
+			top: 100%;
+			right: 10%;
+			width: 320px;
+			max-height: 500px;
+			overflow: hidden;
+			display: none;
+			margin-top: 10px;
+			/* Add margin to the top */
+			padding: 10px;
+			/* Add some padding */
+			box-sizing: border-box;
+			/* Include padding in the width */
+			border: 2px solid #d9d9d9;
+			/* Add a border */
+			border-radius: 5px;
+			/* Add border radius */
+			background-color: #fff;
+			/* Change the background color */
+		}
+
+		.sub-menu-wrap.open-menu {
+			display: block;
+		}
+
+		.sub-menu {
+			background: #fff;
+			padding: 20px;
+			margin: 10px;
+		}
+
+		.user-info {
+			display: flex;
+			align-items: center;
+		}
+
+		.userinfo h3 {
+			font-weight: 500;
+		}
+
+		.user-info img {
+			width: 60px;
+			border-radius: 50%;
+			margin-right: 15px;
+		}
+
+		.sub-menu hr {
+			border: 0;
+			height: 1px;
+			width: 100%;
+			background: #ccc;
+			margin: 15px 0 10px;
+		}
+
+		.sub-menu-link {
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+			color: #525252;
+			margin: 12px 0;
+		}
+
+		.sub-menu-link p {
+			width: 100%;
+		}
+
+		.sub-menu-link img {
+			width: 40px;
+			background: #e5e5e5;
+			border-radius: 50%;
+			padding: 8px;
+			margin-right: 15px;
+		}
+
+		.sub-menu-link span {
+			font-size: 22px;
+			transition: trasform 0.5s;
+		}
+
+		.sub-menu-link:hover span {
+			transform: translateX(5px);
+		}
+
+		#modal {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #fff;
+			padding: 40px 120px;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		label {
+			margin-top: 10px;
+			font-weight: bold;
+			font-size: 16px;
+		}
+
+		input,
+		textarea {
+			padding: 10px;
+			margin: 10px 0;
+			border-radius: 5px;
+			border: none;
+			box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+			width: 100%;
+			max-width: 400px;
+		}
+
+		button[type="submit"],
+		button#closeModal {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			border-radius: 5px;
+			border: none;
+			cursor: pointer;
+		}
+
+		button#closeModal {
+			background-color: #1f1d1d;
+			margin-top: 10px;
+
+		}
+
+		button[type="submit"] {
+			position: absolute;
+			margin: 10px 150px;
+			background-color: #bd3b3b;
+			left: 150px;
+			top: 373px;
+
+		}
+
+
+		.color-picker {
+			display: flex;
+			flex-wrap: wrap;
+			margin-top: 20px;
+		}
+
+		.color-picker button {
+			width: 20px;
+			height: 20px;
+			margin-right: 5px;
+			margin-bottom: 5px;
+			border-radius: 50%;
+			border: none;
+			outline: none;
+			cursor: pointer;
+		}
+
+		.color-picker button:hover {
+			transform: scale(1.2);
+		}
+
+
+		#logoutButton {
+			background-color: #bd3b3b;
+			color: #1f1d1d;
+		}
+
+		#logoutButton:hover {
+			background-color: #fff;
+			color: #333;
+			transition: .4s;
+		}
+
+		#overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			display: none;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+
+		}
+
+		.box {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			width: 300px;
+			height: 200px;
+			padding: 20px;
+			border-radius: 10px;
+			background-color: #f7f7f7;
+			box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
+			transition: all 0.3s;
+		}
+
+		.box:hover {
+			transform: translateY(-5px);
+			box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+		}
+
+		.box-name {
+			margin: 0;
+			font-size: 24px;
+			font-weight: bold;
+			color: #333;
+		}
+
+		.box-description {
+			margin: 10px 0;
+			font-size: 16px;
+			color: #666;
+		}
+
+		.box-date {
+			margin: 0;
+			font-size: 14px;
+			color: #000000;
+		}
+
+		.edit-button,
+		.delete-button {
+			display: inline-block;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: rgb(0, 0, 0);
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+			margin-right: 10px;
+			font-family: JetBrains Mono, monospace;
+		}
+
+		.delete-button {
+			background-color: #f44336;
+		}
+
+		/* Optional: Add hover styles */
+		.edit-button:hover,
+		.delete-button:hover {
+			opacity: 0.8;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<a href="file:///C:/Drivers/JS.1/.vscode/addsubject.html" class="logo">
+			<img src="https://st4.depositphotos.com/18695922/25154/v/450/depositphotos_251541290-stock-illustration-logo-letter-design.jpg"
+				alt="Logo">
+			<span>List Name</span>
+		</a>
+		<nav class="navigation">
+			<a href="C:\Drivers\JS.1\.vscode\home.html">Home</a>
+			<a href="#">About</a>
+			<a href="#">Community</a>
+			<div calss="action">
+				<img src="C:\Users\DELL\Downloads\Documents\user.png" class="user-pic" width="40px"
+					onclick="toggleMenu()">
+				<div class="sub-menu-wrap" id="subMenu" style="margin-right: -92px;">
+					<div class="sub-menu">
+						<div class="user-info">
+							<img src="C:\Users\DELL\Downloads\Documents\user.png">
+							<h2>Alaa Mobarak</h2>
+						</div>
+						<hr>
+						<a href="C:\Drivers\JS.1\.vscode\user.html" class="sub-menu-link">
+							<img src="C:\Users\DELL\Downloads\Documents\profile.png">
+							<p>Edit Profile</p>
+							<span>></span>
+						</a>
+						<a href="#" class="sub-menu-link">
+							<img src="C:\Users\DELL\Downloads\Documents\setting.png">
+							<p>Settings & Privacy</p>
+							<span>></span>
+						</a>
+						<a href="#" class="sub-menu-link">
+							<img src="C:\Users\DELL\Downloads\Documents\help.png">
+							<p>Help & Support</p>
+							<span>></span>
+						</a>
+						<a href="#" class="sub-menu-link" id="logout-link" onclick="">
+							<img src="C:\Users\DELL\Downloads\Documents\logout.png">
+							<p>Logout</p>
+							<span>></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<br><br><br><br><br>
+
+	<body>
+		<div class="container">
+			<h1>Question Creator</h1>
+			<form id="question-form">
+				<label for="question-type">Select Question Type:</label>
+				<select id="question-type">
+					<option value="">-- Select Question Type --</option>
+					<option value="mcq">MCQ</option>
+					<option value="true-false">True or False</option>
+					<option value="article">Article</option>
+				</select>
+	
+				<div id="mcq-question" class="hidden" style="width: 393px;">
+					<label for="mcq-question-input">Question:</label><br>
+					<input type="text" id="mcq-question-input" name="mcq-question-input">
+					<br>
+	
+					<label for="mcq-answer-a-input">Answer A:</label><br>
+					<input type="text" id="mcq-answer-a-input" name="mcq-answer-a-input">
+					<br>
+					<label for="mcq-answer-b-input">Answer B:</label><br>
+					<input type="text" id="mcq-answer-b-input" name="mcq-answer-b-input">
+					<br>
+					<label for="mcq-answer-c-input">Answer C:</label><br>
+					<input type="text" id="mcq-answer-c-input" name="mcq-answer-c-input">
+					<br>
+					<label for="mcq-answer-d-input">Answer D:</label><br>
+					<input type="text" id="mcq-answer-d-input" name="mcq-answer-d-input">
+				</div>
+	
+				<div id="true-false-question" class="hidden">
+					<label for="true-false-question-input">Question:</label>
+					<input type="text" id="true-false-question-input" name="true-false-question-input">
+	
+					<label for="true-false-answer">Answer:</label>
+					<select id="true-false-answer" name="true-false-answer">
+						<option value="true">True</option>
+						<option value="false">False</option>
+					</select>
+				</div>
+	
+				<div id="article-question" class="hidden">
+					
+					<label for="article-question-input">Question:</label><br>
+					
+					<input type="text" id="article-question-input" name="article-question-input">
+	
+					<label for="article-answer-input">Answer:</label><br>
+					<textarea id="article-answer-input" name="article-answer-input" rows="5"></textarea>
+				</div>
+	
+				<input type="submit" value="Create Question">
+			</form>
+	
+			<div id="question-container"></div>
+		</div>
+	
+		<script>
+	const form = document.querySelector('#question-form');
+	const questionTypeSelect = document.querySelector('#question-type');
+	const mcqQuestionDiv = document.querySelector('#mcq-question');
+	const trueFalseQuestionDiv = document.querySelector('#true-false-question');
+	const articleQuestionDiv = document.querySelector('#article-question');
+	const questionContainer = document.querySelector('#question-container');
+	let questionCount = 0;
+	
+	form.addEventListener('submit', (event) => {
+		event.preventDefault();
+	
+		const questionType = questionTypeSelect.value;
+	
+		if (questionType === 'mcq') {
+			const question = document.querySelector('#mcq-question-input').value;
+			const answerA = document.querySelector('#mcq-answer-a-input').value;
+			const answerB = document.querySelector('#mcq-answer-b-input').value;
+			const answerC = document.querySelector('#mcq-answer-c-input').value;
+			const answerD = document.querySelector('#mcq-answer-d-input').value;
+	
+			const answers = [answerA, answerB, answerC, answerD];
+	
+			showResult(question, answers);
+		} else if (questionType === 'true-false') {
+			const question = document.querySelector('#true-false-question-input').value;
+			const answer = document.querySelector('#true-false-answer').value;
+	
+			showResult(question, [answer]);
+		} else if (questionType === 'article') {
+			const question = document.querySelector('#article-question-input').value;
+			const answer = document.querySelector('#article-answer-input').value;
+	
+			showResult(question, [answer]);
+		}
+	
+		form.reset();
+	});
+	
+	questionTypeSelect.addEventListener('change', (event) => {
+		const questionType = event.target.value;
+	
+		if (questionType === 'mcq') {
+			mcqQuestionDiv.classList.remove('hidden');
+			trueFalseQuestionDiv.classList.add('hidden');
+			articleQuestionDiv.classList.add('hidden');
+		} else if (questionType === 'true-false') {
+			mcqQuestionDiv.classList.add('hidden');
+			trueFalseQuestionDiv.classList.remove('hidden');
+			articleQuestionDiv.classList.add('hidden');
+		} else if (questionType === 'article') {
+			mcqQuestionDiv.classList.add('hidden');
+			trueFalseQuestionDiv.classList.add('hidden');
+			articleQuestionDiv.classList.remove('hidden');
+		}
+	});
+	
+	function showResult(question, answers) {
+		const questionDiv = document.createElement('div');
+		questionDiv.classList.add('question-container');
+	
+		const questionHeader = document.createElement('h3');
+		questionHeader.textContent = `Question ${++questionCount}`;
+	
+		const questionParagraph = document.createElement('p');
+		questionParagraph.innerHTML = `<strong>Question:</strong> ${question}`;
+	
+		questionDiv.appendChild(questionHeader);
+		questionDiv.appendChild(questionParagraph);
+	
+		if (answers.length === 1) {
+			const answerParagraph = document.createElement('p');
+			answerParagraph.innerHTML = `<strong>Answer:</strong> ${answers[0]}`;
+	
+			questionDiv.appendChild(answerParagraph);
+		} else {
+			const answerList = document.createElement('ul');
+	
+			for (let i = 0; i < answers.length; i++) {
+				const answerListItem = document.createElement('li');
+				answerListItem.innerHTML = `<strong>Answer ${String.fromCharCode(65 + i)}:</strong> ${answers[i]}`;
+	
+				answerList.appendChild(answerListItem);
+			}
+	
+			questionDiv.appendChild(answerList);
+		}
+	
+		questionContainer.appendChild(questionDiv);
+	}	
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Question Bank-Subject-Page</title>
+	<link rel="icon" href="C:\Users\DELL\Pictures\Screenshots\Screenshot 2023-06-18 225539.png" type="image/png">
+	<style>
+		.navigation button#openModal {
+			text-decoration: none;
+			color: #333;
+			font-size: 16px;
+			margin-right: 30px;
+			padding: 10px 0;
+			position: relative;
+			background-color: white;
+			border: white;
+			font-family: JetBrains Mono, monospace
+		}
+
+		.navigation button#openModal::after {
+			content: "";
+			position: absolute;
+			width: 0%;
+			height: 2px;
+			background-color: #4ec9b0;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			transition: all 0.3s;
+		}
+
+		.navigation button#openModal:hover {
+			color: #4ec9b0;
+		}
+
+		.navigation button#openModal:hover::after {
+			width: 100%;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #f5f5f5;
+			font-family: JetBrains Mono, monospace;
+			font-size: 16px;
+			color: #333;
+		}
+
+		header {
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 20px 40px;
+			background-color: #fff;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 999;
+		}
+
+		.logo {
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+			color: #333;
+			font-size: 24px;
+			font-weight: bold;
+			letter-spacing: 1px;
+			margin-right: 40px;
+		}
+
+		.logo img {
+			width: 40px;
+			height: 40px;
+			margin-right: 10px;
+		}
+
+		.navigation {
+			display: flex;
+			align-items: center;
+		}
+
+		.navigation a {
+			text-decoration: none;
+			color: #333;
+			font-size: 16px;
+			margin-right: 30px;
+			padding: 10px 0;
+			transition: all 0.3s;
+			position: relative;
+		}
+
+		.navigation a:hover {
+			color: #4ec9b0;
+		}
+
+		.navigation a:before {
+			content: "";
+			position: absolute;
+			width: 0%;
+			height: 2px;
+			background-color: #4ec9b0;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			transition: all 0.3s;
+		}
+
+		.navigation a:hover:before {
+			width: 100%;
+		}
+
+		.profile {
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+			color: #333;
+			font-size: 16px;
+			font-weight: bold;
+			padding: 10px 20px;
+			background-color: #ffffff;
+			border-radius: 20px;
+			transition: all 0.3s;
+		}
+
+		.profile:hover {
+			background-color: #3a8c7f;
+		}
+
+		.profile img {
+			width: 30px;
+			height: 30px;
+			margin-right: 10px;
+			border-radius: 50%;
+			object-fit: cover;
+			object-position: center;
+		}
+
+		.profile span {
+			margin-right: 10px;
+		}
+
+		.sub-menu-wrap {
+			position: absolute;
+			top: 100%;
+			right: 10%;
+			width: 320px;
+			max-height: 500px;
+			overflow: hidden;
+			display: none;
+			margin-top: 10px;
+			/* Add margin to the top */
+			padding: 10px;
+			/* Add some padding */
+			box-sizing: border-box;
+			/* Include padding in the width */
+			border: 2px solid #d9d9d9;
+			/* Add a border */
+			border-radius: 5px;
+			/* Add border radius */
+			background-color: #fff;
+			/* Change the background color */
+		}
+
+		.sub-menu-wrap.open-menu {
+			display: block;
+		}
+
+		.sub-menu {
+			background: #fff;
+			padding: 20px;
+			margin: 10px;
+		}
+
+		.user-info {
+			display: flex;
+			align-items: center;
+		}
+
+		.userinfo h3 {
+			font-weight: 500;
+		}
+
+		.user-info img {
+			width: 60px;
+			border-radius: 50%;
+			margin-right: 15px;
+		}
+
+		.sub-menu hr {
+			border: 0;
+			height: 1px;
+			width: 100%;
+			background: #ccc;
+			margin: 15px 0 10px;
+		}
+
+		.sub-menu-link {
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+			color: #525252;
+			margin: 12px 0;
+		}
+
+		.sub-menu-link p {
+			width: 100%;
+		}
+
+		.sub-menu-link img {
+			width: 40px;
+			background: #e5e5e5;
+			border-radius: 50%;
+			padding: 8px;
+			margin-right: 15px;
+		}
+
+		.sub-menu-link span {
+			font-size: 22px;
+			transition: trasform 0.5s;
+		}
+
+		.sub-menu-link:hover span {
+			transform: translateX(5px);
+		}
+
+		#modal {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #fff;
+			padding: 40px 120px;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		label {
+			margin-top: 10px;
+			font-weight: bold;
+			font-size: 16px;
+		}
+
+		input,
+		textarea {
+			padding: 10px;
+			margin: 10px 0;
+			border-radius: 5px;
+			border: none;
+			box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+			width: 100%;
+			max-width: 400px;
+		}
+
+		button[type="submit"],
+		button#closeModal {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			border-radius: 5px;
+			border: none;
+			cursor: pointer;
+		}
+
+		button#closeModal {
+			background-color: #1f1d1d;
+			margin-top: 10px;
+
+		}
+
+		button[type="submit"] {
+			position: absolute;
+			margin: 10px 150px;
+			background-color: #bd3b3b;
+			left: 150px;
+			top: 373px;
+
+		}
+
+
+		.color-picker {
+			display: flex;
+			flex-wrap: wrap;
+			margin-top: 20px;
+		}
+
+		.color-picker button {
+			width: 20px;
+			height: 20px;
+			margin-right: 5px;
+			margin-bottom: 5px;
+			border-radius: 50%;
+			border: none;
+			outline: none;
+			cursor: pointer;
+		}
+
+		.color-picker button:hover {
+			transform: scale(1.2);
+		}
+
+
+		#logoutButton {
+			background-color: #bd3b3b;
+			color: #1f1d1d;
+		}
+
+		#logoutButton:hover {
+			background-color: #fff;
+			color: #333;
+			transition: .4s;
+		}
+
+		#overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			display: none;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+
+		}
+
+		.box {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			width: 300px;
+			height: 200px;
+			padding: 20px;
+			border-radius: 10px;
+			background-color: #f7f7f7;
+			box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
+			transition: all 0.3s;
+		}
+
+		.box:hover {
+			transform: translateY(-5px);
+			box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+		}
+
+		.box-name {
+			margin: 0;
+			font-size: 24px;
+			font-weight: bold;
+			color: #333;
+		}
+
+		.box-description {
+			margin: 10px 0;
+			font-size: 16px;
+			color: #666;
+		}
+
+		.box-date {
+			margin: 0;
+			font-size: 14px;
+			color: #000000;
+		}
+
+		.edit-button,
+		.delete-button {
+			display: inline-block;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: rgb(0, 0, 0);
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+			margin-right: 10px;
+			font-family: JetBrains Mono, monospace;
+		}
+
+		.delete-button {
+			background-color: #f44336;
+		}
+
+		/* Optional: Add hover styles */
+		.edit-button:hover,
+		.delete-button:hover {
+			opacity: 0.8;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<a href="C:\Drivers\JS.1\.vscode\home.html" class="logo">
+			<img src="https://st4.depositphotos.com/18695922/25154/v/450/depositphotos_251541290-stock-illustration-logo-letter-design.jpg"
+				alt="Logo">
+			<span>Subject Name</span>
+		</a>
+		<nav class="navigation">
+			<a href="C:\Drivers\JS.1\.vscode\home.html">Home</a>
+			<a href="#">About</a>
+			<a href="#">Community</a>
+			<button id="openModal">Add List</button>
+			<div calss="action">
+				<img src="C:\Users\DELL\Downloads\Documents\user.png" class="user-pic" width="40px"
+					onclick="toggleMenu()">
+				<div class="sub-menu-wrap" id="subMenu" style="margin-right: -92px;">
+					<div class="sub-menu">
+						<div class="user-info">
+							<img src="C:\Users\DELL\Downloads\Documents\user.png">
+							<h2>Alaa Mobarak</h2>
+						</div>
+						<hr>
+						<a href="C:\Drivers\JS.1\.vscode\user.html" class="sub-menu-link">
+							<img src="C:\Users\DELL\Downloads\Documents\profile.png">
+							<p>Edit Profile</p>
+							<span>></span>
+						</a>
+						<a href="#" class="sub-menu-link">
+							<img src="C:\Users\DELL\Downloads\Documents\setting.png">
+							<p>Settings & Privacy</p>
+							<span>></span>
+						</a>
+						<a href="#" class="sub-menu-link">
+							<img src="C:\Users\DELL\Downloads\Documents\help.png">
+							<p>Help & Support</p>
+							<span>></span>
+						</a>
+						<a href="#" class="sub-menu-link" id="logout-link" onclick="">
+							<img src="C:\Users\DELL\Downloads\Documents\logout.png">
+							<p>Logout</p>
+							<span>></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<br><br><br><br><br>
+	<div id="overlay">
+		<div id="modal">
+			<h2>List Information</h2>
+			<form>
+				<label for="name">List Name:</label>
+				<input type="text" id="name" name="name" required>
+				<label for="description">Description:</label>
+				<textarea id="description" name="description" required></textarea>
+				<label for="date">Date:</label>
+				<input type="date" id="date" name="date" required>
+				<button type="submit" id="saveButton">Create</button>
+			</form>
+			<button id="closeModal">Cancel</button>
+		</div>
+	</div>
+	<div id="subjectList" style="display: flex; flex-wrap: wrap;"></div>
+
+	<script>
+		const openModal = document.getElementById('openModal');
+		const closeModal = document.getElementById('closeModal');
+		const overlay = document.getElementById('overlay');
+		const saveButton = document.getElementById('saveButton');
+		const form = document.querySelector('form');
+
+		openModal.addEventListener('click', function () {
+			overlay.style.display = 'block';
+			form.reset();
+			saveButton.textContent = 'Submit';
+			delete form.dataset.boxId;
+			delete form.dataset.mode;
+		});
+
+		closeModal.addEventListener('click', function () {
+			overlay.style.display = 'none';
+		});
+
+		function logout() {
+			window.location.href = "file:///C:/Users/DELL/Downloads/Documents/front/Login%20Page.html#";
+		}
+
+		let subjectList = document.getElementById("subjectList");
+		let count = 0;
+
+		subjectList.addEventListener('click', function (event) {
+			const target = event.target;
+
+			if (target.classList.contains('delete-button')) {
+				target.parentNode.parentNode.remove();
+			}
+			if (target.classList.contains('edit-button')) {
+				const box = target.parentNode.parentNode;
+				const name = box.querySelector('.box-name').textContent;
+				const description = box.querySelector('.box-description').textContent;
+				const date = box.querySelector('.box-date').textContent;
+				document.getElementById('name').value = name;
+				document.getElementById('description').value = description;
+				document.getElementById('date').value = date;
+				overlay.style.display = 'block';
+				form.dataset.mode = 'edit';
+				form.dataset.boxId = box.id;
+				saveButton.textContent = 'Save';
+			}
+		});
+
+		form.addEventListener('submit', function (event) {
+			event.preventDefault();
+			const name = document.getElementById('name').value;
+			const description = document.getElementById('description').value;
+			const date = document.getElementById('date').value;
+			const data = `
+			
+			<a href="file:///C:/Drivers/JS.1/.vscode/addquestion.html" style="text-decoration:none">
+			<div class="box" id="${count}" style="margin: 16px;">
+			<h3 class="box-name" style="height:46px; ">${name}</h3>
+			<p class="box-description" style="height:30px;">${description}</p>
+			<p class="box-date" style="height:50px";>${date}</p>
+			</a>
+			<div class="box-buttons">
+				<button class="edit-button">Edit</button>
+				<button class="delete-button">Delete</button>
+			</div>
+			</div>`;
+			if (form.dataset.mode === 'edit') {
+				const box = document.getElementById(form.dataset.boxId);
+				box.querySelector('.box-name').textContent = name;
+				box.querySelector('.box-description').textContent = description;
+				box.querySelector('.box-date').textContent = date;
+				form.dataset.mode = '';
+				form.dataset.boxId = '';
+				saveButton.textContent = 'Submit';
+			} else {
+				if (count % 2 == 0) {
+					subjectList.insertAdjacentHTML('afterbegin', data);
+				} else {
+					subjectList.insertAdjacentHTML('beforeend', data);
+				}
+				count++;
+			}
+			overlay.style.display = 'none';
+		});
+
+		function toggleMenu() {
+			let subMenu = document.getElementById("subMenu");
+			if (subMenu.style.display === "block") {
+				subMenu.style.display = "none";
+			} else {
+				subMenu.style.display = "block";
+			}
+		}
+
+	</script>
+</body>
+
+</html>

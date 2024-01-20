@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Time Tracker</title>
+    <style>
+        /* CSS styles for formatting the page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="time"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        select {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="button"] {
+            width: 100px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Play Station Time</h1>
+    <form id="timeForm">
+        <label for="startTime">Start Time:</label>
+        <input type="time" id="startTime" required>
+        <br>
+        <label for="endTime">End Time:</label>
+        <input type="time" id="endTime" required>
+        <br>
+        <label for="rate">value:</label>
+        <select id="rate">
+            <option value="10">10 LE</option>
+            <option value="15">15 LE</option>
+            <option value="20">20 LE</option>
+        </select>
+        <br>
+        <input type="button" value="Calculate" onclick="calculateTime()">
+    </form>
+    <div id="output" class="output"></div>
+
+    <script>
+        // JavaScript code
+        function calculateTime() {
+            let startTime = document.getElementById("startTime").value;
+            let endTime = document.getElementById("endTime").value;
+            let rate = parseInt(document.getElementById("rate").value);
+
+            // Convert input string to hours and minutes
+            let a = parseInt(startTime.slice(0, 2));
+            let b = parseInt(startTime.slice(3, 5));
+            let c = parseInt(endTime.slice(0, 2));
+            let d = parseInt(endTime.slice(3, 5));
+
+            let tot = 0;
+            let aa = a * 60 + b;
+            let bb = c * 60 + d;
+            tot += Math.abs(aa - bb);
+
+            let output = document.getElementById("output");
+            output.innerHTML = "Elregala played " + Math.floor(tot / 60) + "H and " + (tot % 60) + "M<br>ABO ELSEED want " + ((tot % 60) / 6.00 + ((Math.floor(tot / 60)) * rate)) + " L.E";
+       
+		}
+    </script>
+</body>
+</html>
